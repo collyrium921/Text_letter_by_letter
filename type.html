@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> typing </title>
+<meta charset="UTF-8">
+<style type="text/css">
+
+body {
+	font-family: Arial;
+	font-size: 50px;
+}
+
+#container {
+	text-align: left;
+}
+
+.typed-text {
+	display: inline-block;
+	color: black;
+	letter-spacing: 2px;
+}
+.cursor {
+	display: inline-block;
+	width: 2px;
+	height: 45px;
+	background-color: black;
+	margin-left: 0.1rem;
+	animation: blink 1s infinite;
+}
+.cursor .typing{
+	animation: none;
+}
+
+@keyframes blink {
+	/* from, to {
+		background-color: transparent
+	}
+	100% {
+		background-color: black;
+	}*/
+	0%{background-color: black;}
+	49% {background-color: black;}
+	50%{background-color: transparent; }
+	99% {background-color: transparent; }
+	100%{background-color: black;}
+}
+
+</style>
+</head>
+
+<body>
+
+	<div id="container">
+		<div>
+			RE:
+		</div>
+		<div>
+			THINK
+		</div>
+		<span class="typed-text"></span><span class = "cursor">&nbsp</span>
+	</div>
+
+<script type="text/javascript">
+
+const typedTextSpan = document.querySelector(".typed-text");
+
+// List of sentences
+const textArray = [
+	"CARDS",
+	"SAVINGS",
+	"FEROX",
+	"REWARDS",
+	"INVESTMENT",
+	"ANALYTICS",
+	"PAYMENT",
+	"LOAN",
+	"SUPPORT"
+];
+// delay between typing of letters
+const typingDelay = 200;
+//delay between erasing of letters
+const erasingDelay = 100;
+// delay between the current and the ext string
+const newTextDelay = 1000;
+let textArrayIndex = 0;
+let charIndex = 0;
+
+function type(){
+	// type character then wait for 200ms before calling it again
+	// if we are at the last character then we wait for 2000ms before calling the erase function
+	if(charIndex < textArray[textArrayIndex].length){
+		typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+		charIndex++;
+		setTimeout(type, typingDelay);
+
+	}
+	else{
+		setTimeout(erase, newTextDelay);
+
+	}
+}
+
+function erase(){
+	if (charIndex>0){
+		typedTextSpan.textContent = textArray[textArrayIndex].substring(0,charIndex-1);
+		charIndex--;
+		setTimeout(erase, erasingDelay);
+
+	}
+	else{
+		// type
+		textArrayIndex++;
+		if (textArrayIndex>=textArray.length) textArrayIndex=0;
+		setTimeout(type, typingDelay);
+	}
+}
+document.addEventListener("DOMContentLoaded", function(){
+	setTimeout(type, newTextDelay);
+});
+</script>
+
+</body>
+</html>
